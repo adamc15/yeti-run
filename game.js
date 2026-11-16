@@ -19,6 +19,9 @@ const CFG = {
   yetiSpeed: 4.7,
   yetiMaxSpeed: 5.8,
 };
+// Handy for testing/tweaking: add ?yeti=100 to the URL to make the yeti show up at 100m.
+const yetiParam = +new URLSearchParams(location.search).get('yeti');
+if (yetiParam > 0) CFG.yetiStartMeters = yetiParam;
 const { W, H } = CFG;
 const CELL = CFG.cell;
 const ANG = [-90, -60, -30, 0, 30, 60, 90].map(d => d * Math.PI / 180);
@@ -103,6 +106,7 @@ let mode = 'title'; // title | play | pause | over
 let G = {};
 const keys = {};
 let holdL = 0, holdR = 0;
+const mouse = { x: W / 2, y: 200, active: false };
 let bestScore = 0;
 try { bestScore = +localStorage.getItem('yeti-run-best') || 0; } catch (e) {}
 document.querySelectorAll('.bestval').forEach(n => n.textContent = bestScore);
@@ -199,6 +203,15 @@ function update() {
   if (keys.left) { holdL++; if (holdL > 16 && holdL % 8 === 0) turn(-1); } else holdL = 0;
   if (keys.right) { holdR++; if (holdR > 16 && holdR % 8 === 0) turn(1); } else holdR = 0;
   if (keys.down) goDown();
+
+  // mouse steering: skier heads toward the cursor (keyboard takes over until the mouse moves again)
+  if (mouse.active && sk.crash <= 0 && sk.z <= 2) {
+    const mx = mouse.x - W / 2, my = mouse.y - 100;
+    if (mx * mx + my * my > 64) {
+      const deg = Math.atan2(mx, my) * 180 / Math.PI;
+      sk.dir = Math.max(0, Math.min(6, Math.round(Math.max(-90, Math.min(90, deg)) / 30) + 3));
+    }
+  }
 
   if (sk.inv > 0) sk.inv--;
   if (sk.trig > 0) sk.trig--;
@@ -502,12 +515,23 @@ window.addEventListener('keydown', e => {
   const k = KEYMAP[e.code];
   if (!k) return;
   keys[k] = true;
+  if (k === 'left' || k === 'right' || k === 'down') mouse.active = false;
   if (e.repeat) return;
   if (k === 'left') turn(-1);
   else if (k === 'right') turn(1);
 });
 window.addEventListener('keyup', e => { const k = KEYMAP[e.code]; if (k) keys[k] = false; });
 window.addEventListener('blur', () => { for (const k in keys) keys[k] = false; if (mode === 'play') setMode('pause'); });
+
+// mouse: steer by pointing, click to jump
+canvas.addEventListener('pointermove', e => {
+  if (e.pointerType !== 'mouse') return;
+  const r = canvas.getBoundingClientRect();
+  mouse.x = (e.clientX - r.left) * W / r.width;
+  mouse.y = (e.clientY - r.top) * H / r.height;
+  mouse.active = true;
+});
+canvas.addEventListener('pointerdown', e => { if (e.pointerType === 'mouse') jump(); });
 
 // overlays are clickable / tappable
 el.title.addEventListener('click', primary);

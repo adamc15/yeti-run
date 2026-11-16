@@ -28,7 +28,11 @@ Then open http://localhost:8000. You can also just open `index.html` directly.
 | P / Esc | Pause |
 | M | Mute |
 
+Mouse: point where you want to ski (the skier heads toward the cursor) and click to jump. Touching a key hands control back to the keyboard until you move the mouse again.
+
 Touch devices get on-screen buttons.
+
+The yeti appears at 1500m. To test it quickly, add `?yeti=100` to the URL.
 
 ## Hosting your own copy
 
