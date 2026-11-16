@@ -152,6 +152,12 @@ function goDown() {
   sk.dir = 3;
 }
 
+function jump() {
+  const sk = G.sk;
+  if (mode !== 'play' || sk.crash > 0 || sk.z > 0 || sk.speed < 0.5) return;
+  sk.vz = 2.3; sk.z = 0.01; SFX.jump();
+}
+
 function crash(sk) {
   sk.crash = CFG.crashFrames; sk.speed = 0; sk.spin = 0; sk.spinAnim = 0;
   SFX.crash();
@@ -488,7 +494,11 @@ window.addEventListener('keydown', e => {
   if (['ArrowLeft', 'ArrowRight', 'ArrowDown', 'ArrowUp', 'Space'].includes(e.code)) e.preventDefault();
   if (e.code === 'KeyM') { muted = !muted; return; }
   if (e.code === 'KeyP' || e.code === 'Escape') { togglePause(); return; }
-  if (e.code === 'Space' || e.code === 'Enter') { if (!e.repeat) primary(); return; }
+  if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') {
+    if (!e.repeat) { if (mode === 'play') jump(); else if (e.code === 'Space') primary(); }
+    return;
+  }
+  if (e.code === 'Enter') { if (!e.repeat) primary(); return; }
   const k = KEYMAP[e.code];
   if (!k) return;
   keys[k] = true;
@@ -512,6 +522,7 @@ document.querySelectorAll('#touch button').forEach(b => {
     keys[act] = true;
     if (act === 'left') turn(-1);
     else if (act === 'right') turn(1);
+    else if (act === 'jump') jump();
   });
   const up = () => { keys[act] = false; };
   b.addEventListener('pointerup', up);

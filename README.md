@@ -22,6 +22,7 @@ Then open http://localhost:8000. You can also just open `index.html` directly.
 | --- | --- |
 | Left / Right (or A / D) | Turn (hold to keep turning) |
 | Down (or S) | Point straight downhill |
+| Space / Up (or W) | Jump over obstacles (ramps give a bigger jump) |
 | F or Shift | Boost (limited meter, recharges) |
 | Left / Right in the air | Spin for bonus style points |
 | P / Esc | Pause |
