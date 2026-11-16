@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Yeti Run</title>
+<meta name="description" content="A free, open-source downhill skiing game for the browser. Dodge trees, hit ramps, outrun the yeti.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="wrap">
+  <div class="titlebar"><span>Yeti Run</span><span class="tb-btns"><i></i><i></i></span></div>
+
+  <div id="hud">
+    <div><b>Time</b> <span id="time">0:00</span></div>
+    <div><b>Dist</b> <span id="dist">0</span>m</div>
+    <div><b>Speed</b> <span id="speed">0</span></div>
+    <div><b>Style</b> <span id="style">0</span></div>
+    <div class="boostbox"><b>Boost</b><span id="boostbar"><span id="boostfill"></span></span></div>
+  </div>
+
+  <div id="stage">
+    <canvas id="game"></canvas>
+    <div id="toast"></div>
+
+    <div class="overlay" id="title">
+      <h1>YETI RUN</h1>
+      <p>Ski downhill. Dodge the trees. Hit the ramps.<br>Whatever you do, don't let the <b>yeti</b> catch you.</p>
+      <p class="press">Press <kbd>Space</kbd> or tap to start</p>
+      <p class="best">Best: <span class="bestval">0</span></p>
+    </div>
+
+    <div class="overlay hidden" id="over">
+      <h1>CHOMP!</h1>
+      <p id="result"></p>
+      <p class="press">Press <kbd>Space</kbd> or tap to try again</p>
+    </div>
+
+    <div class="overlay hidden" id="pause">
+      <h1>PAUSED</h1>
+      <p class="press">Press <kbd>P</kbd> to resume</p>
+    </div>
+  </div>
+
+  <div id="touch">
+    <button data-act="left" aria-label="Turn left">&#9664;</button>
+    <button data-act="down" aria-label="Straight down">&#9660;</button>
+    <button data-act="right" aria-label="Turn right">&#9654;</button>
+    <button data-act="boost" aria-label="Boost">BOOST</button>
+  </div>
+
+  <p class="help">
+    <kbd>&larr;</kbd><kbd>&rarr;</kbd> / <kbd>A</kbd><kbd>D</kbd> turn &middot;
+    <kbd>&darr;</kbd> straight down &middot;
+    <kbd>F</kbd> / <kbd>Shift</kbd> boost &middot;
+    in the air, <kbd>&larr;</kbd><kbd>&rarr;</kbd> to spin &middot;
+    <kbd>P</kbd> pause &middot; <kbd>M</kbd> mute
+  </p>
+  <p class="foot">Free &amp; open source (MIT). An original game, not affiliated with any other title. <a href="https://github.com/adamc15/yeti-run">Fork it on GitHub</a>.</p>
+</main>
+<script src="game.js"></script>
+</body>
+</html>
