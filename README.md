@@ -22,13 +22,12 @@ Then open http://localhost:8000. You can also just open `index.html` directly.
 | --- | --- |
 | Left / Right (or A / D) | Turn (hold to keep turning) |
 | Down (or S) | Point straight downhill |
-| Space / Up (or W) | Jump over obstacles (ramps give a bigger jump) |
 | F or Shift | Boost (limited meter, recharges) |
-| Left / Right in the air | Spin for bonus style points |
+| Left / Right in the air | Spin for bonus style points (you only get airborne off ramps and bumps) |
 | P / Esc | Pause |
 | M | Mute |
 
-Mouse: point where you want to ski (the skier heads toward the cursor) and click to jump. Touching a key hands control back to the keyboard until you move the mouse again.
+Mouse: point where you want to ski (the skier heads toward the cursor). Touching a key hands control back to the keyboard until you move the mouse again.
 
 Touch devices get on-screen buttons.
 
